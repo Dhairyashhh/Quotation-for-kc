@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotation & Billing System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Quotation & Billing System</h1>
+            <p>Manage companies, products, discounts and generate bills</p>
+        </header>
+
+        <div class="dashboard">
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar">
+                <div class="nav-item active" onclick="switchTab('companies-tab', this)">🏢 Companies</div>
+                <div class="nav-item" onclick="switchTab('subcategories-tab', this)">📂 Subcategories</div>
+                <div class="nav-item" onclick="switchTab('products-tab', this)">📦 Products</div>
+                <div class="nav-item" onclick="switchTab('discounts-tab', this)">💰 Discounts</div>
+                <div class="nav-item" onclick="switchTab('billing-tab', this)">🛒 Billing</div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <main class="content">
+                <!-- COMPANIES TAB -->
+                <section id="companies-tab" class="tab-section active">
+                    <div class="section-header">
+                        <h2>🏢 Companies</h2>
+                    </div>
+
+                    <div class="add-form-container">
+                        <input type="text" id="newCompanyInput" placeholder="Enter company name...">
+                        <button class="btn btn-primary" onclick="addCompany()">Add Company</button>
+                    </div>
+
+                    <div id="companiesList" class="companies-grid"></div>
+                </section>
+
+                <!-- SUBCATEGORIES TAB -->
+                <section id="subcategories-tab" class="tab-section">
+                    <div class="section-header">
+                        <h2>📂 Subcategories</h2>
+                    </div>
+
+                    <div class="company-selector">
+                        <label>Select Company:</label>
+                        <select id="subcompanySelect" onchange="loadSubcategoriesForCompany()">
+                            <option value="">-- Choose a company --</option>
+                        </select>
+                    </div>
+
+                    <div id="subcategoriesContent" style="display: none;">
+                        <div class="add-form-container">
+                            <input type="text" id="newSubcategoryInput" placeholder="Enter subcategory name...">
+                            <button class="btn btn-primary" onclick="addSubcategory()">Add Subcategory</button>
+                        </div>
+                        <div id="subcategoriesList" class="subcategories-grid"></div>
+                    </div>
+
+                    <div id="selectCompanyMsg" class="empty-state">Select a company to manage subcategories</div>
+                </section>
+
+                <!-- PRODUCTS TAB -->
+                <section id="products-tab" class="tab-section">
+                    <div class="section-header">
+                        <h2>📦 Products</h2>
+                    </div>
+
+                    <div class="company-selector">
+                        <label>Filter by Company:</label>
+                        <select id="productcompanySelect" onchange="loadProductsForCompany()">
+                            <option value="">-- All Companies --</option>
+                        </select>
+                    </div>
+
+                    <div class="company-selector">
+                        <label>Filter by Subcategory:</label>
+                        <select id="productSubcategorySelect" onchange="applyProductFilters()">
+                            <option value="">-- All Subcategories --</option>
+                        </select>
+                    </div>
+
+                    <div class="product-controls">
+                        <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()">
+                        <button class="btn btn-secondary" onclick="selectAllProducts()">Select All</button>
+                        <button class="btn btn-secondary" onclick="deselectAllProducts()">Clear</button>
+                        <button class="btn btn-primary" onclick="addSelectedToCart()">Add Selected to Cart</button>
+                        <button class="btn btn-danger" onclick="deleteSelectedProducts()">Delete Selected</button>
+                    </div>
+
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="switchProductTab('paste-tab', this)">Paste Data</button>
+                        <button class="tab-btn" onclick="switchProductTab('manual-tab', this)">Add Manually</button>
+                    </div>
+
+                    <div id="paste-tab" class="product-tab active">
+                        <div class="parser-config">
+                            <label>Separator Symbol:</label>
+                            <select id="separatorSelect">
+                                <option value="₹">₹ (Rupee - auto-detect)</option>
+                                <option value="—">— (Em-dash)</option>
+                                <option value="–">– (En-dash)</option>
+                                <option value="|">| (Pipe)</option>
+                                <option value="-">- (Hyphen)</option>
+                                <option value=":">: (Colon)</option>
+                                <option value="→">→ (Arrow)</option>
+                                <option value="=">=  (Equals)</option>
+                            </select>
+                        </div>
+
+                        <textarea id="pasteArea" placeholder="Paste product data from ChatGPT or any source..."></textarea>
+
+                        <div class="company-selector">
+                            <label>Add to Company:</label>
+                            <select id="pastecompanySelect">
+                                <option value="">-- Select company --</option>
+                            </select>
+                        </div>
+
+                        <div class="company-selector">
+                            <label>Subcategory (Optional):</label>
+                            <select id="pasteSubcategorySelect">
+                                <option value="">No subcategory</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="parsePastedData()" style="width: 100%;">Parse & Add Products</button>
+                        <div id="parseStatus" class="status-message" style="display: none;"></div>
+                    </div>
+
+                    <div id="manual-tab" class="product-tab">
+                        <div class="manual-form">
+                            <div class="form-group">
+                                <label>Company:</label>
+                                <select id="manualcompanySelect" onchange="updateManualSubcategoryDropdown()">
+                                    <option value="">-- Select company --</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Product Name:</label>
+                                <input type="text" id="productName" placeholder="e.g., Widget A">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Price (₹):</label>
+                                <input type="number" id="productPrice" placeholder="0.00" step="0.01" min="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Subcategory (Optional):</label>
+                                <select id="manualSubcategorySelect">
+                                    <option value="">No subcategory</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-primary" onclick="addProductManually()" style="width: 100%;">Add Product</button>
+                            <div id="manualStatus" class="status-message" style="display: none;"></div>
+                        </div>
+                    </div>
+
+                    <div class="products-list-container">
+                        <div id="productsList" class="products-list"></div>
+                    </div>
+                </section>
+
+                <!-- DISCOUNTS TAB -->
+                <section id="discounts-tab" class="tab-section">
+                    <div class="section-header">
+                        <h2>💰 Discounts</h2>
+                    </div>
+
+                    <div class="company-selector">
+                        <label>Select Company:</label>
+                        <select id="discountcompanySelect" onchange="loadProductsForDiscount()">
+                            <option value="">-- Choose a company --</option>
+                        </select>
+                    </div>
+
+                    <div id="discountContent" style="display: none;">
+                        <div class="discount-controls">
+                            <div class="control-group">
+                                <label>Search:</label>
+                                <input type="text" id="discountSearchInput" placeholder="Search products..." onkeyup="filterDiscountProducts()">
+                            </div>
+                            <button class="btn btn-secondary" onclick="selectAllDiscountProducts()">Select All</button>
+                            <button class="btn btn-secondary" onclick="deselectAllDiscountProducts()">Clear</button>
+                        </div>
+
+                        <div class="bulk-discount">
+                            <label>Set Discount for Selected:</label>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="number" id="bulkDiscountInput" placeholder="Discount %" min="0" max="100" step="0.1">
+                                <button class="btn btn-primary" onclick="applyBulkDiscount()">Apply</button>
+                            </div>
+                        </div>
+
+                        <div id="discountList" class="discount-products"></div>
+                    </div>
+
+                    <div id="selectCompanyDiscountMsg" class="empty-state">Select a company to manage discounts</div>
+                </section>
+
+                <!-- BILLING TAB -->
+                <section id="billing-tab" class="tab-section">
+                    <div class="billing-container">
+                        <div class="cart-section">
+                            <div class="section-header">
+                                <h2>🛒 Select Items & Shopping Cart</h2>
+                            </div>
+
+                            <div class="company-selector">
+                                <label>Select Company:</label>
+                                <select id="billcompanySelect" onchange="loadSubcategoriesForBilling()">
+                                    <option value="">-- Choose a company --</option>
+                                </select>
+                            </div>
+
+                            <div class="company-selector">
+                                <label>Select Subcategory:</label>
+                                <select id="billSubcategorySelect" onchange="applyBillingFilters()">
+                                    <option value="">-- Choose a subcategory --</option>
+                                </select>
+                            </div>
+
+                            <div id="billProductsContainer" style="display: none;">
+                                <input type="text" id="billSearchInput" placeholder="Search products..." onkeyup="filterBillingProducts()">
+                                <div class="product-controls">
+                                    <button class="btn btn-secondary" onclick="selectAllBillingProducts()">Select All</button>
+                                    <button class="btn btn-secondary" onclick="deselectAllBillingProducts()">Clear</button>
+                                    <button class="btn btn-primary" onclick="addSelectedBillingToCart()">Add to Cart</button>
+                                </div>
+                                <div id="billProductsList" class="bill-products-list"></div>
+                            </div>
+                        </div>
+
+                        <div class="summary-section">
+                            <div class="section-header">
+                                <h2>📋 Bill Summary</h2>
+                            </div>
+
+                            <div id="cartItems" class="cart-items">
+                                <p class="empty-state">Add items to cart</p>
+                            </div>
+
+                            <div class="bill-settings">
+                                <label>GST (%):</label>
+                                <input type="number" id="gstRate" value="18" min="0" max="100" step="0.1" onchange="updateBillSummary()">
+                            </div>
+
+                            <div class="bill-summary">
+                                <div class="summary-row">
+                                    <span>Subtotal:</span>
+                                    <span id="subtotal">₹0.00</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>GST:</span>
+                                    <span id="gstAmount">₹0.00</span>
+                                </div>
+                                <div class="summary-row total">
+                                    <span>Total:</span>
+                                    <span id="total">₹0.00</span>
+                                </div>
+                            </div>
+
+                            <button id="generateBillBtn" class="btn btn-primary" onclick="generateBill()" style="width: 100%; margin-top: 15px;">
+                                📥 Generate Bill
+                            </button>
+                            <button class="btn btn-secondary" onclick="clearCart()" style="width: 100%; margin-top: 10px;">Clear Cart</button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

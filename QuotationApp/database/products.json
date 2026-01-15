@@ -1,0 +1,170 @@
+[
+  {
+    "id": 2,
+    "name": "10.00 sq. mm",
+    "price": 255800.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 59.0
+  },
+  {
+    "id": 3,
+    "name": "16.00 sq. mm",
+    "price": 403000.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 59.0
+  },
+  {
+    "id": 4,
+    "name": "25.00 sq. mm",
+    "price": 639800.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 53.0
+  },
+  {
+    "id": 5,
+    "name": "35.00 sq. mm",
+    "price": 882500.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 53.0
+  },
+  {
+    "id": 6,
+    "name": "50.00 sq. mm",
+    "price": 1270400.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 0.0
+  },
+  {
+    "id": 7,
+    "name": "70.00 sq. mm",
+    "price": 1813100.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 0.0
+  },
+  {
+    "id": 8,
+    "name": "95.00 sq. mm",
+    "price": 2330600.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 0.0
+  },
+  {
+    "id": 9,
+    "name": "120.00 sq. mm",
+    "price": 3086000.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 0.0
+  },
+  {
+    "id": 10,
+    "name": "150.00 sq. mm",
+    "price": 3830000.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 0.0
+  },
+  {
+    "id": 11,
+    "name": "185.00 sq. mm",
+    "price": 4670400.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 0.0
+  },
+  {
+    "id": 12,
+    "name": "240.00 sq. mm",
+    "price": 6289400.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 0.0
+  },
+  {
+    "id": 13,
+    "name": "300.00 sq. mm",
+    "price": 7743800.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 0.0
+  },
+  {
+    "id": 14,
+    "name": "400.00 sq. mm",
+    "price": 10280100.0,
+    "company_id": 1,
+    "subcategory": "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+    "discount": 0.0
+  },
+  {
+    "id": 15,
+    "name": "0.50 sq. mm",
+    "price": 1355.0,
+    "company_id": 1,
+    "subcategory": "wires",
+    "discount": 0
+  },
+  {
+    "id": 16,
+    "name": "0.75 sq. mm",
+    "price": 1905.0,
+    "company_id": 1,
+    "subcategory": "wires",
+    "discount": 0
+  },
+  {
+    "id": 17,
+    "name": "1.00 sq. mm",
+    "price": 2585.0,
+    "company_id": 1,
+    "subcategory": "wires",
+    "discount": 0
+  },
+  {
+    "id": 18,
+    "name": "1.50 sq. mm",
+    "price": 3785.0,
+    "company_id": 1,
+    "subcategory": "wires",
+    "discount": 0
+  },
+  {
+    "id": 19,
+    "name": "2.50 sq. mm",
+    "price": 6040.0,
+    "company_id": 1,
+    "subcategory": "wires",
+    "discount": 0
+  },
+  {
+    "id": 20,
+    "name": "4.00 sq. mm",
+    "price": 8845.0,
+    "company_id": 1,
+    "subcategory": "wires",
+    "discount": 0
+  },
+  {
+    "id": 21,
+    "name": "6.00 sq. mm",
+    "price": 13170.0,
+    "company_id": 1,
+    "subcategory": "wires",
+    "discount": 0
+  },
+  {
+    "id": 21,
+    "name": "geyser",
+    "price": 90.0,
+    "company_id": 2,
+    "subcategory": "",
+    "discount": 0
+  }
+]

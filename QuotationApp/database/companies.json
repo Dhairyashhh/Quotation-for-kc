@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "havells",
+    "subcategories": [
+      "Havells Flexible Industrial Cables (Higher current carrying capacity) (1000 m)",
+      "wires"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "philips",
+    "subcategories": [
+      "geyser"
+    ]
+  }
+]
